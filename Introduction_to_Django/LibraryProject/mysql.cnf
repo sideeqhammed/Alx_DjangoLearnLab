@@ -1,5 +1,5 @@
 [client]
-database = 
-user = 
-password = PASSWORD
+database = django_database
+user = django_username
+password = django_pswd
 default-character-set = utf8
