@@ -12,6 +12,24 @@ services:
       - '3306:3306'
     volumes:
       - mysql_data:/var/lib/mysql # Persistent data storage
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - '8000:8000'
+    depends_on:
+      - mysql
+    environment:
+      DJANGO_DATABASE_HOST: ${MYSQL_HOST}
+      DJANGO_DATABASE_NAME: ${MYSQL_DATABASE}
+      DJANGO_DATABASE_USER: ${MYSQL_USER}
+      DJANGO_DATABASE_PASSWORD: ${MYSQL_PASSWORD}
+    env_file:
+      - .env
   adminer:
     image: adminer
     container_name: django_adminer
