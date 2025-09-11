@@ -1,2 +1,2 @@
-library = Library.object.get(name=library_name)
+library = Library.objects.get(name=library_name)
 books = library.books.all()
