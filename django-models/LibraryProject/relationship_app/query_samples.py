@@ -1,0 +1,1 @@
+Book.object.filter(authorId = authorId)
