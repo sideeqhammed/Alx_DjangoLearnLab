@@ -1,3 +1,5 @@
+from .models import Library, Author, Book, Librarian
+
 # Checks for List of all books in a library.
 library = Library.objects.get(name=library_name)
 books = library.books.all()
