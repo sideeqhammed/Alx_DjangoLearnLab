@@ -33,20 +33,20 @@ class Librarian(models.Model):
   
 class UserProfile(models.Model):
 
-  role_choices = [
+  ROLE_CHOICES = [
     ('Admin', 'Admin'),
-    ('Librarian', 'Librarian')
-    ('Member', 'Member')
+    ('Librarian', 'Librarian'),
+    ('Member', 'Member'),
   ]
 
   user = models.OneToOneField(User, on_delete=models.CASCADE)
-  role = models.CharField(choices=role_choices, default='Member')
+  role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='Member')
 
   def __str__(self):
     return(f'{self.user.username}' - {self.role})
   
 @receiver (post_save, sender=User)
-def create_user_profile (sender, instance, created **kwargs):
+def create_user_profile (sender, instance, created, **kwargs):
   if created:
     UserProfile.objects.create(user=instance)
 
