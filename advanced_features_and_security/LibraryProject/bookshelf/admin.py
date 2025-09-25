@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Book
+from .models import Book, CustomUser
 
 # Register your models here.
 
@@ -10,3 +10,4 @@ class BookAdmin(admin.ModelAdmin):
   pass
 
 admin.site.register(Book)
+admin.site.register(CustomUser)
