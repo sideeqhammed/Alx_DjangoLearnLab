@@ -23,10 +23,10 @@ class LibraryDetailView (DetailView):
 def register (request):
   if request.method == "POST":
     form = UserCreationForm(request.POST)
-    if form.is_valid:
+    if form.is_valid():
       user = form.save()
       login(request, user)
-      redirect('books_list')
+      return redirect('books_list')
   else:
     form = UserCreationForm()
 
