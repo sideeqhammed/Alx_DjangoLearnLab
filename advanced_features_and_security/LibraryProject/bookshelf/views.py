@@ -21,3 +21,12 @@ def add_book_view(request):
   else:
     form = BookForm()
   return render(request, 'bookshelf/add_book.html', {'form':form})
+
+def add_book_view(request):
+  if request.method == 'POST':
+    form = ExampleForm(request.POST)
+    if form.is_valid():
+      return redirect('book_list')
+  else:
+    form = ExampleForm()
+  return render(request, 'bookshelf/add_book.html', {'form':form})
