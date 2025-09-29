@@ -167,6 +167,9 @@ SESSION_COOKIE_SECURE = True
 # Ensure CSRF cookies are only sent over HTTPS
 CSRF_COOKIE_SECURE = True 
 
+# Tell Django how to detect HTTPS requests from a proxy
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 # Prevent site from being displayed in a frame (defends against clickjacking)
 X_FRAME_OPTIONS = "DENY"  
