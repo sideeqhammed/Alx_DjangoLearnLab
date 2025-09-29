@@ -10,7 +10,7 @@ class BookAdmin(admin.ModelAdmin):
   search_fields = ["title", "author"]
   pass
 
-admin.site.register(Book)
+admin.site.register(Book, BookAdmin)
 
 class CustomUserAdmin(UserAdmin):
   list_display = ('username', "email", "date_of_birth", "is_staff", "is_superuser")
