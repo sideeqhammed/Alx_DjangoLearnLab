@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-sz8rlx=eo_uw@tqk$@f@c-x2o_0qijt)5qb=um7&k9yl_^0v8('
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -140,3 +145,34 @@ SECURE_HSTS_PRELOAD = True
 
 # Referrer policy
 SECURE_REFERRER_POLICY = "same-origin"
+
+
+# Redirect all non-HTTPS requests to HTTPS
+SECURE_SSL_REDIRECT = True  
+
+# Enable HTTP Strict Transport Security (HSTS)
+# 31536000 seconds = 1 year
+SECURE_HSTS_SECONDS = 31536000  
+
+# Apply HSTS policy to all subdomains
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  
+
+# Allow the domain to be preloaded into browsers’ HSTS lists
+SECURE_HSTS_PRELOAD = True 
+
+
+# Ensure session cookies are only sent over HTTPS
+SESSION_COOKIE_SECURE = True  
+
+# Ensure CSRF cookies are only sent over HTTPS
+CSRF_COOKIE_SECURE = True 
+
+
+# Prevent site from being displayed in a frame (defends against clickjacking)
+X_FRAME_OPTIONS = "DENY"  
+
+# Prevent browsers from MIME-sniffing (forces them to respect declared Content-Type)
+SECURE_CONTENT_TYPE_NOSNIFF = True  
+
+# Enable browser’s XSS filter (older setting, still useful in some browsers)
+SECURE_BROWSER_XSS_FILTER = True 
