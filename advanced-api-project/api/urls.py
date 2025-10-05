@@ -6,8 +6,8 @@ urlpatterns = [
   path('', BookListApiView.as_view(), name='book-api-list'),
   path('<int:pk>/', BookDetailApiView.as_view(), name='book-api-detail'),
   path('createapi/', BookCreateApiView.as_view(), name='create-api-book'),
-  path('updateapi/', BookUpdateApiView.as_view(), name='update-api-book'),
-  path('deleteapi/', BookDeleteApiView.as_view(), name='delete-api-book'),
+  path('<int:pk>/updateapi', BookUpdateApiView.as_view(), name='update-api-book'),
+  path('<int:pk>/deleteapi', BookDeleteApiView.as_view(), name='delete-api-book'),
 
 
 

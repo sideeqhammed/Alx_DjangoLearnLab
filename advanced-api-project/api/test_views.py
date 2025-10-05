@@ -1,5 +1,5 @@
 from django.test import TestCase
-from rest_framework.test import APITestCase, APIClient
+from rest_framework.test import APITestCase
 from .models import Book, Author
 from django.contrib.auth.models import User
 from rest_framework import status
@@ -35,10 +35,9 @@ class BookTestCase(TestCase):
 
 class BookTestCase(APITestCase):
   def setUp(self):
-
     # create users
-    self.user = User.objects.create(username='john', password='john123')
-    self.client = APIClient()
+    self.user = User.objects.create_user(username='john', password='john123')
+
     author1 = Author.objects.create(name='Harper Lee')
     author2 = Author.objects.create(name='F. Scott Fitzgerald')
     self.book1 = Book.objects.create(title='To Kill a Mockingbird', author=author1, publication_year=1960)
@@ -64,12 +63,10 @@ class BookTestCase(APITestCase):
       'publication_year' : 1859,
     }
     response = self.client.post(url, data)
-    self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
+    self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
   def test_book_create_authorized(self):
-    token = Token.objects.create(user=self.user)
-    self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+    self.client.login(username='john', password='john123')
 
     url = reverse('create-api-book')
     author = Author.objects.create(name='Charles Dickens')
@@ -82,4 +79,34 @@ class BookTestCase(APITestCase):
     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
     self.assertEqual(Book.objects.count(), 3)
 
+  def test_book_update_unauth(self):
+    url = reverse('update-api-book', args=[self.book2.id])
+    data = {'title': 'The Great Gatsby Copy'}
+    response = self.client.patch(url, data, format='json')
+    self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+    self.book2.refresh_from_db()
+    self.assertEqual(self.book2.title, 'The Great Gatsby')
+
+  def test_book_update_auth(self):
+    self.client.login(username='john', password='john123')
+
+    url = reverse('update-api-book', args=[self.book2.id])
+    data = {'title': 'The Great Gatsby Copy'}
+    response = self.client.patch(url, data, format='json')
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+    self.book2.refresh_from_db()
+    self.assertEqual(self.book2.title, 'The Great Gatsby Copy')
    
+  def test_book_delete_unauth(self):
+    url = reverse('delete-api-book', args=[self.book2.id])
+    response = self.client.delete(url)
+    self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+    self.assertEqual(Book.objects.count(), 2)
+
+  def test_book_delete_auth(self):
+    self.client.login(username='john', password='john123')
+
+    url = reverse('delete-api-book', args=[self.book2.id])
+    response = self.client.delete(url)
+    self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+    self.assertEqual(Book.objects.count(), 1)
