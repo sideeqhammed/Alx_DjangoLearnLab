@@ -16,5 +16,5 @@ def register(request):
   return render(request, 'blog/register.html', {'form':form})
 
 @login_required
-def profile(request):
+def profileView(request):
   return render(request, 'blog/profile.html')
