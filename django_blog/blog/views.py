@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post
+from .models import Post, Comment
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -48,3 +48,8 @@ class BlogDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
   model = Post
   template_name = 'blog/post_delete.html'
   success_url = reverse_lazy('blog_list')
+
+class CommentListView(ListView):
+  model = Comment
+  template_name = 'blog/comments.html'
+  context_object_name = 'comments'
