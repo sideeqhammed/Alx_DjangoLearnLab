@@ -49,7 +49,7 @@ class BlogDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
   template_name = 'blog/post_delete.html'
   success_url = reverse_lazy('blog_list')
 
-class CommentListView(ListView):
-  model = Comment
-  template_name = 'blog/comments.html'
-  context_object_name = 'comments'
+# class CommentListView(ListView):
+#   model = Comment
+#   template_name = 'blog/comments.html'
+#   context_object_name = 'comments'
