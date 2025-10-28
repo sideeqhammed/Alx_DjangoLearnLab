@@ -10,7 +10,7 @@ class CustomUserCreationForm(UserCreationForm):
     model = User
     fields = ['username', 'email']
 
-class CommentForm(forms.ModelForm):
-  class Meta:
-    model = Comment
-    fields = ['content']
+# class CommentForm(forms.ModelForm):
+#   class Meta:
+#     model = Comment
+#     fields = ['content']

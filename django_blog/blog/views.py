@@ -50,3 +50,26 @@ class BlogDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
   success_url = reverse_lazy('blog_list')
 
 
+# def post_detail(request)
+
+class CommentListView(ListView):
+  model = Comment
+  template_name = 'blog/comment_list.html'
+  context_object_name = 'comments'
+
+class CommentCreateView(CreateView):
+  model = Comment
+  template_name = 'blog/comment_create.html'
+  fields = ['content']
+  success_url = reverse_lazy('blog_detail')
+
+class CommentEditView(UpdateView):
+  model =  Comment
+  template_name = 'blog/comment_create.html'
+  fields = ['content']
+  success_url = reverse_lazy('blog_detail')
+
+class CommentDeleteView(DeleteView):
+  model = Comment
+  template_name = 'blog/comment_delete.html'
+  success_url = reverse_lazy('blog_detail')

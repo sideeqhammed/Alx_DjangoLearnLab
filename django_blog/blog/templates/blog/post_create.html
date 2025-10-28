@@ -7,7 +7,9 @@
 </head>
 <body>
   <h1>Create a Post</h1>
-  <a href="{% url 'blog_list' %}">Back</a>
+  {% if post.id %}
+    <a href="{% url 'blog_detail' post.id %}">Back</a>
+  {% endif %}
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

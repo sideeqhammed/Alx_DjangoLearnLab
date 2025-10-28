@@ -1,0 +1,7 @@
+<h2>Comments</h2>
+{% for comment in comments %}
+  {{ comment.content}}
+  {{ comment.created_at }}
+  {{ comment.updated_at }}
+{% endfor %}
+<a href="{% url 'comment_create' pk=1 %}">Add a new comment</a>
